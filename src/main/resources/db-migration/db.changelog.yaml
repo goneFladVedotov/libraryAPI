@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 01-init-tables
+      author: vlad_fedotov
+      changes:
+        - sqlFile:
+            path: /changesets/01-init-tables.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 02-init-persons
+      author: vlad_fedotov
+      changes:
+        - sqlFile:
+            path: /changesets/02-init-persons.sql
+            relativeToChangelogFile: true

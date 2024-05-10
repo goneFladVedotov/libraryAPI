@@ -1,0 +1,29 @@
+server:
+  port: 8181
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 1488
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: classpath:/db-migration/db.changelog.yaml
+    enabled: true
+    default-schema: public
+  batch:
+    jdbc:
+      initialize-schema: always
+
+
+jwt:
+  secret: aGJndmdrdnlnZXhzdGZjbWdjbmZqeGR6aHp5cmZqZHR5cmNmY2o=
+  lifetime: 10m
+
