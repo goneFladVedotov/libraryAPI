@@ -1,13 +1,11 @@
 package com.liga.libraryapi.service.impl;
 
 import com.liga.libraryapi.data.entity.OfferedBook;
-import com.liga.libraryapi.service.Mapper;
 import com.liga.libraryapi.web.dto.BookDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OfferedBookMapper implements Mapper<BookDto, OfferedBook> {
-    @Override
+public class OfferedBookMapper {
     public OfferedBook toEntity(BookDto dto) {
         OfferedBook offeredBook = new OfferedBook();
         offeredBook.setIsbn(dto.getIsbn());
@@ -22,7 +20,6 @@ public class OfferedBookMapper implements Mapper<BookDto, OfferedBook> {
         return offeredBook;
     }
 
-    @Override
     public OfferedBook toEntity(OfferedBook offeredBook, BookDto dto) {
         offeredBook.setIsbn(dto.getIsbn());
         offeredBook.setName(dto.getName());
@@ -36,7 +33,6 @@ public class OfferedBookMapper implements Mapper<BookDto, OfferedBook> {
         return offeredBook;
     }
 
-    @Override
     public BookDto toDto(OfferedBook entity) {
         BookDto dto = new BookDto();
         dto.setIsbn(entity.getIsbn());
