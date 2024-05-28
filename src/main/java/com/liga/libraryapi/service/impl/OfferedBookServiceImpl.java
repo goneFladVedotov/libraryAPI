@@ -3,7 +3,6 @@ package com.liga.libraryapi.service.impl;
 import com.liga.libraryapi.data.entity.OfferedBook;
 import com.liga.libraryapi.data.entity.RealBook;
 import com.liga.libraryapi.data.repository.OfferedBookRepository;
-import com.liga.libraryapi.service.Mapper;
 import com.liga.libraryapi.service.OfferedBookService;
 import com.liga.libraryapi.service.RealBookService;
 import com.liga.libraryapi.web.dto.BookDto;
@@ -18,7 +17,7 @@ import java.util.List;
 public class OfferedBookServiceImpl implements OfferedBookService {
     private final OfferedBookRepository offeredBookRepository;
     private final RealBookService realBookService;
-    private final Mapper<BookDto, OfferedBook> mapper;
+    private final OfferedBookMapper mapper;
 
     @Override
     public OfferedBook offerBook(String username, BookDto dto) {
