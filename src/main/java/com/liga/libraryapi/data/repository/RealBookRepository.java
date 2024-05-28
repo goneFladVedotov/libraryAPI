@@ -11,7 +11,7 @@ public interface RealBookRepository extends JpaRepository<RealBook, Long> {
 
     List<RealBook> findByIsbn(String isbn);
 
-    RealBook findByOldBookId(Long oldBookId);
+    Optional<RealBook> findByOldBookId(Long oldBookId);
 
     boolean existsById(Long id);
 }
