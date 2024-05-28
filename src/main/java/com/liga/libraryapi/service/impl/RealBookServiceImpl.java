@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -73,7 +74,7 @@ public class RealBookServiceImpl implements RealBookService {
         var sum = book.getRatingAvg().multiply(new BigDecimal(book.getRatingCount()));
         sum = sum.add(new BigDecimal(rating.ordinal() + 1));
         book.setRatingCount(book.getRatingCount() + 1);
-        book.setRatingAvg(sum.divide(new BigDecimal(book.getRatingCount())).setScale(1));
+        book.setRatingAvg(sum.divide(new BigDecimal(book.getRatingCount()), 1, RoundingMode.HALF_UP));
         realBookRepository.saveAndFlush(book);
     }
 
@@ -82,7 +83,7 @@ public class RealBookServiceImpl implements RealBookService {
         var sum = book.getRatingAvg().multiply(new BigDecimal(book.getRatingCount()));
         sum = sum.subtract(new BigDecimal(oldRating.ordinal() + 1));
         sum = sum.add(new BigDecimal(newRating.ordinal() + 1));
-        book.setRatingAvg(sum.divide(new BigDecimal(book.getRatingCount())).setScale(1));
+        book.setRatingAvg(sum.divide(new BigDecimal(book.getRatingCount()), 1, RoundingMode.HALF_UP));
         realBookRepository.saveAndFlush(book);
     }
 
@@ -92,16 +93,17 @@ public class RealBookServiceImpl implements RealBookService {
         sum = sum.subtract(new BigDecimal(rating.ordinal() + 1));
         book.setRatingCount(book.getRatingCount() - 1);
         if (book.getRatingCount() == 0) {
-            book.setRatingAvg(BigDecimal.ZERO);
+            book.setRatingAvg(BigDecimal.ZERO.setScale(1, RoundingMode.HALF_UP));
         } else {
-            book.setRatingAvg(sum.divide(new BigDecimal(book.getRatingCount())));
+            book.setRatingAvg(sum.divide(new BigDecimal(book.getRatingCount()), 1, RoundingMode.HALF_UP));
         }
         realBookRepository.saveAndFlush(book);
     }
 
     @Override
     public RealBook getByOldBookId(Long oldBookId) {
-        return realBookRepository.findByOldBookId(oldBookId);
+        return realBookRepository.findByOldBookId(oldBookId)
+                .orElseThrow(() -> new IllegalStateException("book not found"));
     }
 
     @Override
